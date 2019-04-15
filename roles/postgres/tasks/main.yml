@@ -1,0 +1,24 @@
+---
+# tasks file for roles/postgres
+#
+  - name: install progress
+    yum:
+      name=postgresql-server state=latest
+
+  - name: enable apache at boot
+    service:
+      name: postgresql
+      enabled: yes
+
+  - name: Check if Data exist 
+    command: ls /var/lib/pgsql
+    register: command_output
+
+  - name:  chkconfig postgresql on
+    command: postgresql-setup initdb
+    when: command_output.stdout == ""
+
+  - name: start postgres
+    service:
+      name: postgresql.service
+      state: started

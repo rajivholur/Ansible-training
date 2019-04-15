@@ -1,0 +1,11 @@
+---
+- name: configuration
+  hosts: all
+  gather_facts: false # remove later! speeds up testing
+  become: true
+  tasks:
+  - name: enable repos
+    template:
+      src: /home/rajiv_raghavan-infosys.com/bad-ansible/3tier-bad/open_three-tier-app.repo
+      dest: /etc/yum.repos.d/open_three-tier-app.repo
+      mode: 0644
